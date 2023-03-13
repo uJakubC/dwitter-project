@@ -12,7 +12,7 @@ class Tweet(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Owner: {self.owner}, body: {self.body}"
+        return f"{self.body}"
 
 
 class Likes(models.Model):
@@ -20,9 +20,15 @@ class Likes(models.Model):
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"Like Owner: {self.owner} | Tweet: {self.tweet} | Created at: {self.created_at}"
+
 
 class Comments(models.Model):
     owner = models.ForeignKey(USER, on_delete=models.CASCADE)
     tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
     body = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment Owner: {self.owner} | Tweet: {self.tweet} | Created at: {self.created_at}"

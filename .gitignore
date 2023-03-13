@@ -266,4 +266,6 @@ dmypy.json
 .pyre/
 
 #idea file
-.idea/
+.idea/*
+.idea/Dwitter.iml
+.idea/misc.xml

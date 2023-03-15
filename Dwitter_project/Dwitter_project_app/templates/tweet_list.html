@@ -1,0 +1,18 @@
+{% extends "master.html" %}
+
+{% block title %}Tweet List{% endblock %}
+
+{% block body %}
+  <div class="mycard">
+    <h1>Hello there :) </h1>
+    <ul>
+      {% for tweet in tweets %}
+        <li>Created by: {{ request.user }}, Created at: {{ tweet.created_at }} <br> <br>
+        {{ tweet.body }}  <br>
+        </li>
+      <br>
+      {% endfor %}
+    </ul>
+  </div>
+
+{% endblock %}

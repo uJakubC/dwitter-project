@@ -5,14 +5,51 @@
 {% block body %}
   <div class="mycard">
     <h1>Hello there :) </h1>
-    <ul>
-      {% for tweet in tweets %}
-        <li>Created by: {{ request.user }}, Created at: {{ tweet.created_at }} <br> <br>
-        {{ tweet.body }}  <br>
-        </li>
-      <br>
-      {% endfor %}
-    </ul>
+    {% if empty_query %}
+    <h3>Ups! Seems like you need to add some dweets</h3>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Publish dweet!</button>
+    </form>
   </div>
+
+
+    {% for tweet in tweets %}
+    <div class="mycard">
+      <h1>Dweeted by: {{ request.user }}</h1> <h5>{{ tweet.created_at }}</h5>
+        {{ tweet.body }}  <br>
+      <hr>
+      <img id="like_img" src="https://www.clipartmax.com/png/small/74-741040_thumb-up-png-youtube-like-button-png.png" >
+          {% for like in likes %}
+              {% if like.tweet_id == tweet.id %}
+                {{ like.total }}
+              {% endif %}
+          {% endfor %}
+    </div>
+    {% endfor %}
+
+
+
+
+<!--    <ul>-->
+<!--      {% for tweet in tweets %}-->
+<!--        <li>Created by: {{ request.user }}, <br>{{ tweet.created_at }} <br> <br>-->
+<!--        {{ tweet.body }}  <br>-->
+<!--          <hr>-->
+<!--          {% for like in likes %}-->
+
+<!--          {% if like.tweet_id == tweet.id %}-->
+<!--            Likes: {{ like.total }}-->
+<!--          {% endif %}-->
+
+<!--          {% endfor %}-->
+<!--        </li>-->
+<!--      <br>-->
+<!--      {% endfor %}-->
+<!--    </ul>-->
+<!--</div>-->
+
 
 {% endblock %}

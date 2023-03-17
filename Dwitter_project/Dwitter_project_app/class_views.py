@@ -13,12 +13,7 @@ class TweetListView(View):
         tweets = Tweet.objects.all().values()
         likes = Likes.objects.values('tweet_id').annotate(total=Count('tweet_id'))
         form = AddTweetForm()
-
-        for i in tweets:
-            print(i)
-        for i in likes:
-            print(i)
-
+        
         if tweets:
             context = {'tweets': tweets, 'likes': likes, 'form': form}
             return render(request=request, template_name="tweet_list.html", context=context)

@@ -14,6 +14,10 @@ class Tweet(models.Model):
     def __str__(self):
         return f"{self.body}"
 
+    @property
+    def o_username(self):
+        return self.owner.username
+
 
 class Likes(models.Model):
     owner = models.ForeignKey(USER, on_delete=models.CASCADE)

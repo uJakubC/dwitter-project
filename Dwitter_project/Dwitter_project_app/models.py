@@ -40,3 +40,7 @@ class Comments(models.Model):
 
     def __str__(self):
         return f"Comment Owner: {self.owner} | Tweet: {self.tweet} | Created at: {self.created_at}"
+
+    @property
+    def o_username(self):
+        return self.owner.username

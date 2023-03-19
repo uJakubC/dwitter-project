@@ -27,6 +27,10 @@ class Likes(models.Model):
     def __str__(self):
         return f"Like Owner: {self.owner} | Tweet: {self.tweet} | Created at: {self.created_at}"
 
+    @property
+    def o_username(self):
+        return self.owner.username
+
 
 class Comments(models.Model):
     owner = models.ForeignKey(USER, on_delete=models.CASCADE)

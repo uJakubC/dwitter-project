@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.db.models import Count
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.views.generic import View
 
 from .forms import AddTweetForm
@@ -31,9 +31,9 @@ class TweetListView(View):
             except IntegrityError:
                 return HttpResponseBadRequest("Bad request")
 
-            tweets = Tweet.objects.all() # Load all tweets once again
+            tweets = Tweet.objects.all()    # Load all tweets once again
             likes = Likes.objects.values('tweet_id').annotate(total=Count('tweet_id'))
-            form = AddTweetForm() # Load clean form
+            form = AddTweetForm()   # Load clean form
             context = {'tweets': tweets, 'likes': likes, 'form': form}
         else:
             tweets = Tweet.objects.all()  # Load all tweets once again
@@ -42,3 +42,15 @@ class TweetListView(View):
             context = {'tweets': tweets, 'likes': likes, 'form': form}
 
         return render(request=request, template_name='tweet_list.html', context=context)
+
+
+class TweetDetailView(View):
+    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
+        try:
+            tweet = Tweet.objects.get(pk=pk)
+            likes = Likes.objects.filter(tweet_id=pk).count()
+            context = {'tweet': tweet, 'likes': likes}
+
+            return render(request=request, template_name="tweet_detail.html", context=context)
+        except Tweet.DoesNotExist:
+            return HttpResponseNotFound("<h1>Page does not exist</h1> <img src='https://as2.ftcdn.net/v2/jpg/03/39/94/53/1000_F_339945393_2xeDV1SAYvwQTrEQXtuO7lUfpJEOzOVr.jpg' >")

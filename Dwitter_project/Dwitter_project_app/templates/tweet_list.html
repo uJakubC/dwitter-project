@@ -18,7 +18,8 @@
 
     {% for tweet in tweets %}
     <div class="mycard">
-      <h1>Dweeted by: {{ tweet.o_username }}</h1> <h5>{{ tweet.created_at }}</h5>
+      <a href={% url 'tweet-detail' pk=tweet.id %} ><h1>Dweeted by: {{ tweet.o_username }}</h1></a>
+        <h5>{{ tweet.created_at }}</h5>
         {{ tweet.body }}  <br>
       <hr>
       <img id="like_img" src="https://www.clipartmax.com/png/small/74-741040_thumb-up-png-youtube-like-button-png.png" >

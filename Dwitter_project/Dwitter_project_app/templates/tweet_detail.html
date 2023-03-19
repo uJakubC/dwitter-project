@@ -1,0 +1,19 @@
+{% extends "master.html" %}
+
+{% block title %}Deet Detail{% endblock %}
+
+{% block body %}
+  <div class="mycard">
+      <h1>Details</h1>
+<ul>
+    <li>Owner: {{ tweet.o_username }}</li>
+    <hr>
+    <li>Body: {{ tweet.body }}</li>
+    <li>Created: {{ tweet.created_at }}</li>
+    <li>Updated: {{ tweet.updated_at }}</li>
+    <li>Likes: {{likes}}</li>
+</ul>
+
+
+  </div>
+{% endblock %}

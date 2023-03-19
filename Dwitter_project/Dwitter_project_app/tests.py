@@ -56,3 +56,30 @@ class LikesTestCase(TestCase):
     def test_like_owner(self):
         like = Likes.objects.get(id=1)
         self.assertEqual(like.o_username, "test123")
+
+
+class CommentsTestCase(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.user = User.objects.create(
+            username="test123",
+            email="test@test.pl",
+            password="secret_password"
+        )
+
+    def setUp(self):
+        self.tweet = Tweet.objects.create(owner=self.user, body='Test body only testcase purposes')
+        self.comment = Comments.objects.create(owner=self.user, tweet=self.tweet, body="Test comment")
+
+    def test_comments_body(self):
+        comment = Comments.objects.get(id=1)
+        self.assertEqual(comment.body, "Test comment")
+
+    def test_comments_owner(self):
+        comment = Comments.objects.get(id=1)
+        self.assertEqual(comment.owner_id, 1)
+
+    def test_comments_owner_username(self):
+        comment = Comments.objects.get(id=1)
+        self.assertEqual(comment.o_username, "test123")

@@ -18,7 +18,9 @@
 
     {% for tweet in tweets %}
     <div class="mycard">
-      <a href={% url 'tweet-detail' pk=tweet.id %} ><h1>Dweeted by: {{ tweet.o_username }}</h1></a>
+    <img id="avatar_img" src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_960_720.png" >
+      <a href={% url 'tweet-detail' pk=tweet.id %} ><h2>
+           {{ tweet.o_username }}</h2></a>
         <h5>{{ tweet.created_at }}</h5>
         {{ tweet.body }}  <br>
       <hr>

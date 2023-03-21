@@ -35,9 +35,9 @@ body {
   margin:20px 0 60px 0;
 
 }.mycard h2 {
-  text-align: center;
+  text-align: left;
   color:#ffffff;
-  margin:20px 0 60px 0;
+  margin:-40px 0 20px 80px;
 
  }
 
@@ -63,21 +63,33 @@ li:hover {
   transform: scale(1.1);
 }
 a:link, a:visited {
-  color: #375BDC;
+  /*color: #375BDC;*/
+  color: whitesmoke;
+
 }
 .main, .main h1 {
   text-align:center;
   color:#375BDC;
 }
 h5{
-  margin-top: -20px;
+  margin-top: -15px;
+  margin-bottom: 60px;
+  margin-left: 75px;
   font-style: italic;
+  color: whitesmoke;
 }
 
 #like_img {
   margin-bottom: -2px;
   width: 20px;
   height: 20px;
+}
+
+#avatar_img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-bottom: -35px;
 }
 
 button {

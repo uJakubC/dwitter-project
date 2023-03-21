@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tweet
+from .models import Tweet, Likes
 
 
 class AddTweetForm(forms.ModelForm):
@@ -16,3 +16,9 @@ class AddTweetForm(forms.ModelForm):
     class Meta:
         model = Tweet
         exclude = ('owner', 'created_at', 'updated_at')
+
+
+class AddLikeForm(forms.ModelForm):
+    class Meta:
+        model = Likes
+        exclude = ('owner', 'tweet', 'created_at', 'updated_at')

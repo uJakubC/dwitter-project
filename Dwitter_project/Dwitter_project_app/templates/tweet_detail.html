@@ -6,17 +6,30 @@
   <div class="mycard">
       <h1>Details</h1>
 <ul>
-    <li>Owner: {{ tweet.o_username }}</li>
+    <li>Owner: {{ tweet.o_username }}<h6>{{ tweet.created_at }}</h6><h6>Likes: {{ likes }}</h6></li>
     <hr>
     <li>Body: {{ tweet.body }}</li>
-    <li>Created: {{ tweet.created_at }}</li>
-    <li>Updated: {{ tweet.updated_at }}</li>
-    <li>Likes: {{likes}}</li>
 </ul><br>
     <form method="post">
       {% csrf_token %}
-      <button type="submit">Like it!</button>
+        {{ like_form.as_p }}
+      <button type="submit" name="like_button">Like it!</button>
     </form>
 
+    <form method="post">
+      {% csrf_token %}
+          {{ comment_form.as_p }}
+      <button type="submit" name="comment_button">Add comment!</button>
+    </form>
   </div>
+
+<div class="mycard">
+  <h1>Comments</h1>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.o_username }}<h6>{{ comment.created_at }}</h6><hr>{{ comment.body }}</li>
+        <hr>
+    {% endfor %}
+</ul>
+</div>
 {% endblock %}

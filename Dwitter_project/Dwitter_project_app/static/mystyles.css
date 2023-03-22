@@ -18,6 +18,27 @@ body {
 .topnav a:hover, .topnav a:active {
   text-decoration: underline;
 }
+
+.recent_tweets {
+  background-color: #f1f1f1;
+  background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
+  background-size: 100% 120px;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: 50px;
+  top: 80px;
+  width: 350px;
+  border-radius: 5px;
+  box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+  padding: 20px;
+}
+
+.recent_tweets h1 {
+  text-align: center;
+  color: #ffffff;
+  margin: 20px 0 60px 0;
+}
+
 .mycard {
   background-color: #f1f1f1;
   background-image: linear-gradient(to bottom, #375BDC, #4D70EF);
@@ -78,11 +99,23 @@ h5{
   font-style: italic;
   color: whitesmoke;
 }
-
+h6{
+  font-size: small;
+  margin-top: 5px;
+  margin-bottom: -6px;
+  font-style: italic;
+  color: black;
+}
 #like_img {
   margin-bottom: -2px;
   width: 20px;
   height: 20px;
+}
+
+#comment_img {
+  margin-bottom: -7px;
+  width: 25px;
+  height: 25px;
 }
 
 #avatar_img {

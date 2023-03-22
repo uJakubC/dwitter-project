@@ -3,6 +3,17 @@
 {% block title %}Tweet List{% endblock %}
 
 {% block body %}
+    <div class="recent_tweets">
+    <h1>Last 5 tweets</h1>
+    <ul>
+    {% for tweet in last_five_tweets %}
+    <li>{{ tweet.body }}</li>
+    {% endfor %}
+    </ul>
+    </div>
+
+
+
   <div class="mycard">
     <h1>Hello there :) </h1>
     {% if empty_query %}
@@ -11,7 +22,7 @@
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit">Publish dweet!</button>
+      <button name="like_button" type="submit">Publish dweet!</button>
     </form>
   </div>
 
@@ -30,29 +41,14 @@
                 {{ like.total }}
               {% endif %}
           {% endfor %}
+    <img id="comment_img" src="https://cdn0.iconfinder.com/data/icons/free-daily-icon-set/512/Comments-512.png" >
+          {% for comment in comments %}
+          {% if comment.tweet_id == tweet.id %}
+            {{ comment.total }}
+          {% endif %}
+      {% endfor %}
     </div>
     {% endfor %}
-
-
-
-
-<!--    <ul>-->
-<!--      {% for tweet in tweets %}-->
-<!--        <li>Created by: {{ request.user }}, <br>{{ tweet.created_at }} <br> <br>-->
-<!--        {{ tweet.body }}  <br>-->
-<!--          <hr>-->
-<!--          {% for like in likes %}-->
-
-<!--          {% if like.tweet_id == tweet.id %}-->
-<!--            Likes: {{ like.total }}-->
-<!--          {% endif %}-->
-
-<!--          {% endfor %}-->
-<!--        </li>-->
-<!--      <br>-->
-<!--      {% endfor %}-->
-<!--    </ul>-->
-<!--</div>-->
 
 
 {% endblock %}

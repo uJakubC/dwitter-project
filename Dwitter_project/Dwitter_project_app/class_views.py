@@ -1,10 +1,12 @@
 from django.db import IntegrityError
 from django.db.models import Count
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.views.generic import View
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 
-from .forms import AddTweetForm, AddLikeForm, AddCommentForm
+from .forms import AddTweetForm, AddLikeForm, AddCommentForm, CreateUserForm
 from .models import Tweet, Likes, Comments
 
 
@@ -17,10 +19,18 @@ class TweetListView(View):
         form = AddTweetForm()
 
         if tweets:
-            context = {'tweets': tweets, 'likes': likes, 'form': form, 'comments': comments, 'last_five_tweets': last_five_tweets}
+            context = {'tweets': tweets,
+                       'likes': likes,
+                       'form': form,
+                       'comments': comments,
+                       'last_five_tweets': last_five_tweets}
             return render(request=request, template_name="tweet_list.html", context=context)
         else:
-            context = {'tweets': tweets, 'empty_query': True, 'form': form, 'comments': comments, 'last_five_tweets': last_five_tweets}
+            context = {'tweets': tweets,
+                       'empty_query': True,
+                       'form': form,
+                       'comments': comments,
+                       'last_five_tweets': last_five_tweets}
             return render(request=request, template_name="tweet_list.html", context=context)
 
     def post(self, request: HttpRequest) -> HttpResponse:
@@ -37,7 +47,12 @@ class TweetListView(View):
         likes = Likes.objects.values('tweet_id').annotate(total=Count('tweet_id'))
         comments = Comments.objects.values('tweet_id').annotate(total=Count('tweet_id'))
         form = AddTweetForm()   # Load clean form
-        context = {'tweets': tweets, 'likes': likes, 'form': form, 'comments': comments, 'last_five_tweets': last_five_tweets}
+        last_five_tweets = tweets.order_by('id')[:5]
+        context = {'tweets': tweets,
+                   'likes': likes,
+                   'form': form,
+                   'comments': comments,
+                   'last_five_tweets': last_five_tweets}
 
         return render(request=request, template_name='tweet_list.html', context=context)
 
@@ -99,3 +114,30 @@ class TweetDetailView(View):
         }
 
         return render(request=request, template_name="tweet_detail.html", context=context)
+
+
+class RegisterView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        form = CreateUserForm()
+        context = {'form': form}
+        return render(request=request, template_name='accounts/register.html', context=context)
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                user = form.cleaned_data.get('username')
+                messages.success(request, 'Account was created for' + user)
+                return redirect('login')
+            except:
+                HttpResponseBadRequest("Bad request")
+        form = CreateUserForm()
+        context = {'form': form}
+        return render(request=request, template_name='accounts/register.html', context=context)
+
+
+class LoginView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        context ={}
+        return render(request=request, template_name='accounts/login.html', context=context)

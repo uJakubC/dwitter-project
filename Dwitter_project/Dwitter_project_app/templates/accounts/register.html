@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+
+{% block title %}Register page{% endblock %}
+
+{% block body %}
+<div class="mycard">
+<h1>Register account!</h1>
+<form method="post">
+    {% csrf_token %}
+<ul>
+    <li>{{ form.username.label }}</li>
+    {{ form.username }}<br>
+
+    <li>{{ form.email.label }}</li>
+    {{ form.email }}<br>
+
+    <li>{{ form.password1.label }}</li>
+    {{ form.password1 }}<br>
+
+    <li>{{ form.password2.label }}</li>
+    {{ form.password2 }}</ul>
+    <br>
+
+    {{ form.errors }}
+    <button type="submit" name="create_user">Create user!</button>
+</form>
+
+</div>
+
+
+{% endblock %}

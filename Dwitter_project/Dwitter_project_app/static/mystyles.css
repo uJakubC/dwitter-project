@@ -126,6 +126,12 @@ h6{
   margin-bottom: -35px;
 }
 
+#main_page_img {
+  margin-bottom: -7px;
+  width: 35px;
+  height: 35px;
+}
+
 button {
   display: inline-block;
   outline: 0;

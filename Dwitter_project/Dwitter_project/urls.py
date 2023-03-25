@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from Dwitter_project_app.class_views import LogoutView, LoginView, RegisterView
+from Dwitter_project_app.class_views import LogoutView, LoginView, RegisterView, MainPageView
 
 urlpatterns = [
+    path('', MainPageView.as_view(), name='main-page'),
     path('admin/', admin.site.urls),
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginView.as_view(), name='login'),

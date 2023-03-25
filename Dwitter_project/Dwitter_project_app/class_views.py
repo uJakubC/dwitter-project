@@ -11,6 +11,11 @@ from .forms import AddTweetForm, AddLikeForm, AddCommentForm, CreateUserForm
 from .models import Tweet, Likes, Comments
 
 
+class MainPageView(View):
+    def get(self, request:HttpRequest) -> HttpResponse:
+        return render(request=request, template_name='main_page.html', context={})
+
+
 class TweetListView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         tweets = Tweet.objects.all()
@@ -126,7 +131,6 @@ class RegisterView(View):
 
     def post(self, request: HttpRequest) -> HttpResponse:
         form = CreateUserForm(request.POST)
-        print(request.POST)
         if form.is_valid():
             try:
                 form.save()

@@ -6,9 +6,15 @@ from django.views.generic import View
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import AddTweetForm, AddLikeForm, AddCommentForm, CreateUserForm
 from .models import Tweet, Likes, Comments
+
+
+class MainPageView(View):
+    def get(self, request:HttpRequest) -> HttpResponse:
+        return render(request=request, template_name='main_page.html', context={})
 
 
 class TweetListView(View):
@@ -58,8 +64,9 @@ class TweetListView(View):
         return render(request=request, template_name='tweet_list.html', context=context)
 
 
-# @login_required(login_url='login')
-class TweetDetailView(View):
+class TweetDetailView(LoginRequiredMixin, View):
+    login_url = '/login/'
+
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
         like_form = AddLikeForm()
         comment_form = AddCommentForm()
@@ -90,7 +97,10 @@ class TweetDetailView(View):
                     like = like_form.save(commit=False)
                     like.owner = request.user
                     like.tweet = tweet
-                    like.save()
+                    if Likes.objects.filter(owner=like.owner, tweet=like.tweet).exists():
+                        messages.error(request, "You already liked it!")
+                    else:
+                        like.save()
                 except IntegrityError:
                     return HttpResponseBadRequest("Bad request")
 
@@ -126,7 +136,6 @@ class RegisterView(View):
 
     def post(self, request: HttpRequest) -> HttpResponse:
         form = CreateUserForm(request.POST)
-        print(request.POST)
         if form.is_valid():
             try:
                 form.save()

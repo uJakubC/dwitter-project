@@ -3,6 +3,9 @@
 {% block title %}Register page{% endblock %}
 
 {% block body %}
+{% for message in messages %}
+    <ul><li>{{ message }}</li></ul>
+{% endfor %}
 <div class="mycard">
 <h1>Register account!</h1>
 <form method="post">
@@ -21,8 +24,10 @@
     {{ form.password2 }}</ul>
     <br>
 
+    <button type="submit" name="create_user">Create user!</button><hr>
+    Already have an account? <br>
+    <a href="{% url "login" %}" style="color: #3c4fe0">Sign in!</a>
     {{ form.errors }}
-    <button type="submit" name="create_user">Create user!</button>
 </form>
 
 </div>

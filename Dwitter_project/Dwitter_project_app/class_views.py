@@ -3,8 +3,9 @@ from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.views.generic import View
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 from .forms import AddTweetForm, AddLikeForm, AddCommentForm, CreateUserForm
 from .models import Tweet, Likes, Comments
@@ -57,6 +58,7 @@ class TweetListView(View):
         return render(request=request, template_name='tweet_list.html', context=context)
 
 
+# @login_required(login_url='login')
 class TweetDetailView(View):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
         like_form = AddLikeForm()
@@ -139,5 +141,28 @@ class RegisterView(View):
 
 class LoginView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        context ={}
+        form = AuthenticationForm()
+        context ={'form': form}
         return render(request=request, template_name='accounts/login.html', context=context)
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.info(request, f"You are now logged in as {username}.")
+            return redirect('tweet-list')
+        else:
+            messages.error(request, "Invalid username or password.")
+        form = AuthenticationForm()
+        context = {'form': form}
+        return render(request=request, template_name='accounts/login.html', context=context)
+
+
+class LogoutView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        logout(request)
+        messages.info(request, f"Logged out!")
+        return redirect('login')

@@ -4,6 +4,22 @@
 
 {% block body %}
     {% for message in messages %}
-        {{ message }}
+        <ul><li>{{ message }}</li></ul>
     {% endfor %}
+
+<div class="mycard">
+<h1>Login </h1>
+<form method="post">
+    {% csrf_token %}
+<ul>
+    <li>{{ form.username.label }}</li>
+    {{ form.username }}<br>
+
+    <li>{{ form.password.label }}</li>
+    {{ form.password }}<br>
+</ul> <br>
+    <button type="submit" name="create_user">Login!</button>
+</form>
+
+</div>
 {% endblock %}

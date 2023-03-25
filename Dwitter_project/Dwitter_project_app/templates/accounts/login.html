@@ -18,7 +18,9 @@
     <li>{{ form.password.label }}</li>
     {{ form.password }}<br>
 </ul> <br>
-    <button type="submit" name="create_user">Login!</button>
+    <button type="submit" name="create_user">Login!</button><br><hr>
+    Don't have an account? <br>
+    <a href="{% url "register" %}" style="color: #3c4fe0">Sign up!</a>
 </form>
 
 </div>

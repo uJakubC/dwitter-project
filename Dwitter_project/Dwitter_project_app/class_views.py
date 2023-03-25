@@ -126,6 +126,7 @@ class RegisterView(View):
 
     def post(self, request: HttpRequest) -> HttpResponse:
         form = CreateUserForm(request.POST)
+        print(request.POST)
         if form.is_valid():
             try:
                 form.save()
@@ -134,6 +135,8 @@ class RegisterView(View):
                 return redirect('login')
             except:
                 HttpResponseBadRequest("Bad request")
+        else:
+            messages.error(request, "Somme error occured during registration :(  -  Please try again")
         form = CreateUserForm()
         context = {'form': form}
         return render(request=request, template_name='accounts/register.html', context=context)

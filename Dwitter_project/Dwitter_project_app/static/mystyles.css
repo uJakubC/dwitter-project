@@ -19,9 +19,6 @@ body {
   text-decoration: underline;
 }
 
-#hello_message{
-  float: right;
-}
 
 .recent_tweets {
   background-color: #f1f1f1;
@@ -88,8 +85,8 @@ li:hover {
   transform: scale(1.1);
 }
 a:link, a:visited {
-  /*color: #375BDC;*/
-  color: whitesmoke;
+  color: #375BDC;
+  /*color: whitesmoke;*/
 
 }
 .main, .main h1 {
@@ -151,4 +148,13 @@ input {
   margin-top: 5px;
   border: 1px solid black;
   border-radius: 5px;
+}
+
+#hello_message{
+  position: absolute;
+  right: 10px;
+}
+
+#sign_up {
+  color: #3c4fe0;
 }

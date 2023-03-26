@@ -6,7 +6,6 @@ from django.views.generic import View
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import AddTweetForm, AddLikeForm, AddCommentForm, CreateUserForm
 from .models import Tweet, Likes, Comments
@@ -64,10 +63,11 @@ class TweetListView(View):
         return render(request=request, template_name='tweet_list.html', context=context)
 
 
-class TweetDetailView(LoginRequiredMixin, View):
-    login_url = '/login/'
-
+class TweetDetailView(View):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
+        if not request.user.is_authenticated:
+            messages.error(request, "You must be logged in to see the details")
+            return redirect('login')
         like_form = AddLikeForm()
         comment_form = AddCommentForm()
         try:
@@ -90,7 +90,6 @@ class TweetDetailView(LoginRequiredMixin, View):
         tweet = Tweet.objects.get(pk=pk)
         like_form = AddLikeForm(request.POST)
         comment_form = AddCommentForm(request.POST)
-
         if 'like_button' in request.POST:
             if like_form.is_valid():
                 try:
@@ -145,7 +144,7 @@ class RegisterView(View):
             except:
                 HttpResponseBadRequest("Bad request")
         else:
-            messages.error(request, "Somme error occured during registration :(  -  Please try again")
+            messages.error(request, "Somme error occurred during registration :(  -  Please try again")
         form = CreateUserForm()
         context = {'form': form}
         return render(request=request, template_name='accounts/register.html', context=context)
@@ -175,6 +174,9 @@ class LoginView(View):
 
 class LogoutView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
+        if not request.user.is_authenticated:
+            messages.error(request, "You are not logged in!")
+            return redirect('main-page')
         logout(request)
         messages.info(request, f"Logged out!")
         return redirect('login')

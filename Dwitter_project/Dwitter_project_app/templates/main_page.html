@@ -3,22 +3,38 @@
 {% block title %}Login page{% endblock %}
 
 {% block body %}
-<div class="mycard">
-<h1>Welcome!</h1>
-<ul>
-    <li><a href={% url 'tweet-list' %}>Dwitter!</a>
-<img id='main_page_img' src="https://media.istockphoto.com/id/1216459375/vector/blue-letter-d-logo-design-element.jpg?s=612x612&w=0&k=20&c=UQu_f9ihtqSGhq5YE5-cy2Tzt9zyWCStvVIWWXFdStg=">
-    </li>
-    <li><a href={% url 'register' %}>Register!</a>
-<img id='main_page_img' src="https://www.paidmembershipspro.com/wp-content/uploads/2016/06/signup.png">
-    </li>
-    <li><a href={% url 'login' %}>Login!</a>
-<img id='main_page_img' src="https://thumbs.dreamstime.com/b/vector-illustration-isolated-white-background-login-button-icon-126999949.jpg">
-    </li>
-    <li><a href={% url 'logout' %}>Logout!</a>
-<img id='main_page_img' src="https://thumbs.dreamstime.com/b/logout-isolated-special-cyan-blue-round-button-abstract-illustration-logout-special-cyan-blue-round-button-103957079.jpg">
-    </li>
-</ul>
-</div>
+    {% for message in messages %}
+        <ul>
+            <li>{{ message }}</li>
+        </ul>
+    {% endfor %}
+    <div class="mycard">
+        <h1>Welcome!</h1>
+        <ul>
+            <li>
+                <a href={% url 'tweet-list' %}>Dwitter!</a>
+                <img id='main_page_img'
+                     src="https://media.istockphoto.com/id/1216459375/vector/blue-letter-d-logo-design-element.jpg?s=612x612&w=0&k=20&c=UQu_f9ihtqSGhq5YE5-cy2Tzt9zyWCStvVIWWXFdStg=">
+            </li>
+            {% if request.user.is_authenticated %}
+                <li>
+                    <a href={% url 'logout' %}>Logout!</a>
+                    <img id='main_page_img'
+                         src="https://thumbs.dreamstime.com/b/logout-isolated-special-cyan-blue-round-button-abstract-illustration-logout-special-cyan-blue-round-button-103957079.jpg">
+                </li>
+            {% else %}
+                <li>
+                    <a href={% url 'register' %}>Register!</a>
+                    <img id='main_page_img'
+                         src="https://www.paidmembershipspro.com/wp-content/uploads/2016/06/signup.png">
+                </li>
+                <li>
+                    <a href={% url 'login' %}>Login!</a>
+                    <img id='main_page_img'
+                         src="https://thumbs.dreamstime.com/b/vector-illustration-isolated-white-background-login-button-icon-126999949.jpg">
+                </li>
+            {% endif %}
+        </ul>
+    </div>
 
 {% endblock %}

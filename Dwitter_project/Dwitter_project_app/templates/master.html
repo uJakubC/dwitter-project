@@ -2,20 +2,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{% block title %}Dwitter{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'mystyles.css' %}">
+    <title>{% block title %}Dwitter{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'mystyles.css' %}">
 </head>
 
 <div class="topnav">
     <a href="{% url "main-page" %}">Home</a>
     {% if request.user.is_authenticated %}
-    <a href="{% url "tweet-list" %}">Dwitter</a>
-    <a id="topnav_right_link" href="{% url "logout" %}">Logout</a>
-    <span id="#hello_message">Hello, {{ request.user }}&nbsp; &nbsp;</span>
+        <a href="{% url "tweet-list" %}">Dwitter</a>
+        <a id="topnav_right_link" href="{% url "logout" %}">Logout</a>
+        <span id="#hello_message">Hello, {{ request.user }}&nbsp; &nbsp;</span>
     {% else %}
-    <a href="{% url "tweet-list" %}">Dwitter</a>
-    <a id="topnav_right_link" href="{% url "login" %}">Login</a>
-    <a id="topnav_right_link" href="{% url "register" %}">Register &nbsp;</a>
+        <a href="{% url "tweet-list" %}">Dwitter</a>
+        <a id="topnav_right_link" href="{% url "login" %}">Login</a>
+        <a id="topnav_right_link" href="{% url "register" %}">Register &nbsp;</a>
     {% endif %}
 
 </div>

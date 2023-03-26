@@ -7,5 +7,5 @@ The final phase of the python developer course :)
 👤 Daniel C.
 
 
-- Github [@Tyroooo](hhttps://github.com/Tyroooo)
+- Github  [@Tyroooo](https://github.com/Tyroooo)
 

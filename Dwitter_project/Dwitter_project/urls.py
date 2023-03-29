@@ -29,5 +29,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
 
     # Dwitter app views
-    path('dwitter/', include('Dwitter.urls'))
+    path('dwitter/', include('Dwitter.urls')),
+    # Users app views
+    path('users/', include('Users.urls'))
 ]

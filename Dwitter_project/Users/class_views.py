@@ -61,3 +61,8 @@ class LogoutView(View):
         logout(request)
         messages.info(request, f"Logged out!")
         return redirect('login')
+
+
+class UserProfileView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        return render(request=request, template_name='profile.html', context={})
